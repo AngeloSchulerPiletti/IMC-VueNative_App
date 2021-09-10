@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "first-vuenative-app",
-    "slug": "first-vuenative-app",
+    "name": "IMC Calculator",
+    "slug": "IMC Calculator",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/muscle.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
