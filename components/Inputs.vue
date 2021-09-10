@@ -13,6 +13,7 @@
       <view class="input_container flex_center">
         <text class="legend">Altura em Centímetros</text>
         <text-input
+          
           keyboardType="numeric"
           class="input_field"
           v-model="height"
@@ -37,7 +38,21 @@ export default {
       height: "",
     };
   },
+  watch: {
+    height: function(){
+      this.checkingField('height');
+    },
+    weight: function(){
+      this.checkingField('weight');
+    }
+  },
   methods: {
+    checkingField(field){
+      if(this[field].length > 3){
+        var heightArr = this[field].split('');
+        this[field] = heightArr.splice(0, 3).join('');
+      }
+    },
     calculate() {
       if (!isNaN(this.weight) && !isNaN(this.height)) {
         var weight = Number(this.weight),
