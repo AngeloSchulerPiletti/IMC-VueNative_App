@@ -13,7 +13,6 @@
       <view class="input_container flex_center">
         <text class="legend">Altura em Centímetros</text>
         <text-input
-          
           keyboardType="numeric"
           class="input_field"
           v-model="height"
@@ -77,20 +76,26 @@ export default {
 
         var calc = weight / (height / 100) ** 2;
         var message;
+        var icon;
 
         if (calc < 13) {
           message = "Desnutrição";
+          icon = false;
         } else if (calc < 18.5) {
           message = "Pré-Desnutrição";
+          icon = false;
         } else if (calc < 25) {
           message = "Saudável";
+          icon = true;
         } else if (calc < 30) {
           message = "Pré-Obesidade";
+          icon = false;
         } else {
           message = "Obesidade";
+          icon = false;
         }
 
-        this.$emit("success", [message, [weight, height]]);
+        this.$emit("success", [message, [weight, height], icon]);
       } else {
         Alert.alert("Dado inválido", "Por favor, adicione apenas números...");
       }
