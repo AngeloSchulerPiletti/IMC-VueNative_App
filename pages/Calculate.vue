@@ -20,7 +20,7 @@ export default {
     },
     methods:{
         goResult(param){
-            this.navigation.navigate("Result", {calcResult: param});
+            this.navigation.navigate("Result", {userData: param});
         }
     },
     components:{

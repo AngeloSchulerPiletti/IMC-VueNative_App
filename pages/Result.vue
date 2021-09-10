@@ -1,6 +1,6 @@
 <template>
   <view>
-    <text>O param é: {{ result }}</text>
+    <text>O param é: {{ situation }}</text>
   </view>
 </template>
 
@@ -8,7 +8,9 @@
 export default {
   data() {
     return {
-      result: "",
+      situation: "",
+      height: "",
+      weight: "",
     };
   },
   props: {
@@ -17,7 +19,10 @@ export default {
     },
   },
   mounted(){
-      this.result = this.navigation.getParam('calcResult');
+      var result = this.navigation.getParam('userData');
+      this.situation = result[0];
+      this.weight = result[1][0];
+      this.height = result[1][1];
   },
   methods: {
     goCalculate() {

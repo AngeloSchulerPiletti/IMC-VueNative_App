@@ -1,10 +1,26 @@
 <template>
-  <view class="container">
-    <view class="top">
-      <text-input class="input_field" v-model="weight" placeholder="Qual o seu peso?"/>
-      <text-input class="input_field" v-model="height" placeholder="Qual a sua altura?"/>
+  <view class="container flex_center">
+    <view class="top flex_center">
+      <view class="input_container flex_center">
+        <text class="legend">Peso em Kg</text>
+        <text-input
+          keyboardType="numeric"
+          class="input_field"
+          v-model="weight"
+          placeholder="Qual o seu peso?"
+        />
+      </view>
+      <view class="input_container flex_center">
+        <text class="legend">Altura em Centímetros</text>
+        <text-input
+          keyboardType="numeric"
+          class="input_field"
+          v-model="height"
+          placeholder="Qual a sua altura?"
+        />
+      </view>
     </view>
-    <view class="bottom">
+    <view class="bottom flex_center">
       <touchable-opacity class="button" :on-press="calculate">
         <text class="txt">Calcular</text>
       </touchable-opacity>
@@ -13,39 +29,84 @@
 </template>
 
 <script>
+import { Alert } from "react-native";
 export default {
-  data(){
-    return{
+  data() {
+    return {
       weight: "",
       height: "",
-    }
+    };
   },
   methods: {
-    calculate(){
-      var weight = Number(this.weight),
+    calculate() {
+      if (!isNaN(this.weight) && !isNaN(this.height)) {
+        var weight = Number(this.weight),
           height = Number(this.height);
 
-      
-      this.$emit('success', 'teste');
+        if (height < 50 || height > 250) {
+          Alert.alert(
+            "Altura inválida",
+            "Por favor, adicione uma altura válida..."
+          );
+          //MUST SHOW AN ERROR
+          return;
+        }
+        if (weight < 10 || weight > 200) {
+          Alert.alert(
+            "Peso inválido",
+            "Por favor, adicione uma peso válido..."
+          );
+          //MUST SHOW AN ERROR
+          return;
+        }
+
+        var calc = weight / (height / 100) ** 2;
+        var message;
+
+        if (calc < 13) {
+          message = "Desnutrição";
+        } else if (calc < 18.5) {
+          message = "Pré-Desnutrição";
+        } else if (calc < 25) {
+          message = "Saudável";
+        } else if (calc < 30) {
+          message = "Pré-Obesidade";
+        } else {
+          message = "Obesidade";
+        }
+
+        this.$emit("success", [message, [weight, height]]);
+      } else {
+        Alert.alert("Dado inválido", "Por favor, adicione apenas números...");
+      }
     },
   },
-}
+};
 </script>
 
 <style scoped>
-.container{
+/* ============= PRESETS ============ */
+.flex_center {
+  display: flex;
   align-items: center;
+}
+/* ============= PRESETS ============ */
+
+.container {
   justify-content: center;
   width: 100%;
-  display: flex;
 }
-.top{
+.top {
   width: 100%;
-  display: flex;
-  align-items: center;
 }
-.input_field{
-  border-color: #1D4859;
+.input_container {
+  width: 100%;
+}
+.legend {
+  margin-bottom: 2;
+}
+.input_field {
+  border-color: #1d4859;
   border-width: 1;
   width: 80%;
   height: 50;
@@ -54,15 +115,13 @@ export default {
   border-radius: 5;
   margin-bottom: 15;
 }
-.bottom{
+.bottom {
   margin-top: 30;
   width: 100%;
-  display: flex;
-  align-items: center;
   color: aqua;
 }
-.button{
-  background-color: #1D4859;
+.button {
+  background-color: #1d4859;
   padding-top: 10;
   padding-bottom: 10;
   padding-left: 30;
@@ -70,8 +129,8 @@ export default {
   border-radius: 1000;
   /* background-color: red; */
 }
-.txt{
-  color: #FAFAFA;
+.txt {
+  color: #fafafa;
   font-size: 15;
 }
 </style>
