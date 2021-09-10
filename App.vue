@@ -1,17 +1,31 @@
 <template>
-  <view class="container">
-    <text class="text-color-primary">My Vue Native App</text>
-  </view>
+  <app-navigator></app-navigator>
 </template>
 
+<script>
+import { createAppContainer, createStackNavigator } from "vue-native-router";
+import Welcome from "./pages/Welcome.vue";
+import Calculate from "./pages/Calculate.vue";
+import Result from "./pages/Result.vue";
+
+const StackNavigator = createStackNavigator(
+  {
+    Welcome: Welcome,
+    Calculate: Calculate,
+    Result: Result,
+  },
+  {
+    initialRouteName: "Welcome",
+  }
+);
+
+const AppNavigator = createAppContainer(StackNavigator);
+
+export default {
+  components: { AppNavigator },
+};
+</script>
+
 <style>
-.container {
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-.text-color-primary {
-  color: blue;
-}
+
 </style>
